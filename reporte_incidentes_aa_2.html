@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Incidentes Ambientales - Aguas Andinas</title>
+  <style>
+    @font-face {
+      font-family: 'Montserrat-Regular';
+      src: url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Montserrat-Regular, Verdana, Arial, sans-serif;
+      background: #ffffff;
+      color: #333333;
+      line-height: 1.6;
+      font-size: 9pt;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 3rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #e8e8e8;
+      padding-bottom: 1.5rem;
+    }
+
+    .header h1 {
+      font-size: 16px;
+      font-weight: 500;
+      margin: 0;
+      color: #888888;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    .header p {
+      font-size: 11px;
+      color: #999999;
+    }
+
+    .header-badge {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-badge img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .section-title {
+      background-color: #f5f5f5;
+      padding: 0.75rem 1rem;
+      margin: 2rem 0 1.5rem 0;
+      border-top: 1px solid #e8e8e8;
+      border-bottom: 1px solid #e8e8e8;
+      font-size: 11px;
+      font-weight: 500;
+      color: #999999;
+      text-align: center;
+    }
+
+    .form-row {
+      display: flex;
+      margin-bottom: 1.5rem;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+
+    .form-row.full {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .form-group.full {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      min-width: 200px;
+      font-size: 9pt;
+      font-weight: 500;
+      color: #333333;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .form-label.required::after {
+      content: ' *';
+      color: #d32f2f;
+    }
+
+    .form-input-wrapper {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    label {
+      display: block;
+      font-size: 9pt;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #333333;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 0;
+      font-size: 9pt;
+      font-family: inherit;
+      background: white;
+      color: #333333;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #999999;
+      box-shadow: none;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+      font-family: inherit;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #999999;
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .radio-group.inline,
+    .checkbox-group.inline {
+      flex-direction: row;
+      gap: 1.5rem;
+    }
+
+    .radio-group label,
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0;
+      cursor: pointer;
+      font-weight: 400;
+      font-size: 9pt;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      accent-color: #666666;
+    }
+
+    .conditional {
+      display: none;
+    }
+
+    .conditional.show {
+      display: block;
+    }
+
+    .helper-text {
+      font-size: 8pt;
+      color: #999999;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .upload-area {
+      border: 1px solid #ddd;
+      border-radius: 0;
+      padding: 1.5rem;
+      text-align: center;
+      background: #fafafa;
+      transition: all 0.2s;
+    }
+
+    .upload-area button {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0;
+      cursor: pointer;
+      font-size: 9pt;
+      font-weight: 500;
+      color: #333333;
+      margin-top: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .upload-area button:hover {
+      border-color: #999999;
+    }
+
+    .confirmation-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f9f9f9;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e8e8e8;
+      margin-bottom: 2rem;
+    }
+
+    .confirmation-box input[type="checkbox"] {
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .confirmation-box label {
+      margin-bottom: 0;
+      cursor: pointer;
+      font-weight: 400;
+      font-size: 9pt;
+      color: #333333;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e8e8e8;
+    }
+
+    button {
+      padding: 0.5rem 1.5rem;
+      border-radius: 0;
+      font-size: 9pt;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: Montserrat-Regular, Verdana, Arial, sans-serif;
+    }
+
+    .btn-cancel {
+      background: white;
+      border: 1px solid #999999;
+      color: #333333;
+    }
+
+    .btn-cancel:hover {
+      background: #f5f5f5;
+    }
+
+    .btn-submit {
+      background: #4a90e2;
+      border: 1px solid #4a90e2;
+      color: white;
+    }
+
+    .btn-submit:hover {
+      background: #357abd;
+      border-color: #357abd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header" style="flex-direction: column; align-items: center; padding-bottom: 1.5rem;">
+      <h1 style="text-align: center; margin: 0;">REPORTE DE INCIDENTES AMBIENTALES</h1>
+    </div>
+
+    <div class="section-title">Información General</div>
+
+    <form id="reportForm">
+      <!-- Sección 1: Información General -->
+      <div class="form-row">
+        <span class="form-label required">1. Área o Proceso</span>
+        <div class="form-input-wrapper">
+          <div class="radio-group inline">
+            <label><input type="radio" name="area" value="recoleccion" required> Recolección</label>
+            <label><input type="radio" name="area" value="distribucion"> Distribución</label>
+            <label><input type="radio" name="area" value="depuracion"> Depuración</label>
+            <label><input type="radio" name="area" value="produccion"> Producción</label>
+            <label><input type="radio" name="area" value="centros"> Centros Operativos</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <span class="form-label required">2. Nombre del recinto</span>
+        <div class="form-input-wrapper">
+          <input type="text" name="recinto" placeholder="Escriba el nombre del recinto" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <span class="form-label required">3. Fecha de detección</span>
+        <div class="form-input-wrapper">
+          <input type="date" name="fecha" required>
+        </div>
+      </div>
+
+      <div class="section-title">Información de Contratista</div>
+
+      <div class="form-row">
+        <span class="form-label required">4. ¿Corresponde a Contratista?</span>
+        <div class="form-input-wrapper">
+          <div class="radio-group inline">
+            <label><input type="radio" name="es_contratista" value="si" id="contratista_si" required> Sí</label>
+            <label><input type="radio" name="es_contratista" value="no" id="contratista_no" checked> No</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row conditional" id="nombre_contratista_section">
+        <span class="form-label required">5. Nombre Contratista</span>
+        <div class="form-input-wrapper">
+          <input type="text" name="nombre_contratista" placeholder="Escriba el nombre">
+        </div>
+      </div>
+
+      <div class="section-title">Clasificación del Incidente</div>
+
+      <div class="form-row">
+        <span class="form-label required">6. ¿Es un derrame?</span>
+        <div class="form-input-wrapper">
+          <select id="es_derrame" name="es_derrame" required>
+            <option value="">Selecciona la respuesta</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row conditional" id="tipo_incidente_section">
+        <span class="form-label required">Tipo incidente</span>
+        <div class="form-input-wrapper">
+          <div class="radio-group">
+            <label><input type="radio" name="tipo_incidente" value="fuga_gases"> Fuga de gases</label>
+            <label><input type="radio" name="tipo_incidente" value="incendio"> Incendio</label>
+            <label><input type="radio" name="tipo_incidente" value="reclamos_olores"> Reclamos de Olores</label>
+            <label><input type="radio" name="tipo_incidente" value="reclamos_ruido"> Reclamos de Ruido</label>
+            <label><input type="radio" name="tipo_incidente" value="otros"> Otras</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="conditional section-title" id="seccion_derrame_titulo" style="display: none;">Detalles del Derrame</div>
+
+      <div class="form-row conditional" id="seccion_derrame_tipo">
+        <span class="form-label required">Tipo de Derrame</span>
+        <div class="form-input-wrapper">
+          <div class="radio-group">
+            <label><input type="radio" name="tipo_derrame" value="sustancias_peligrosas"> Sustancias peligrosas</label>
+            <label><input type="radio" name="tipo_derrame" value="sustancias_no_peligrosas"> Sustancias no peligrosas</label>
+            <label><input type="radio" name="tipo_derrame" value="combustible"> Combustible</label>
+            <label><input type="radio" name="tipo_derrame" value="lodos"> Lodos</label>
+            <label><input type="radio" name="tipo_derrame" value="aguas_servidas"> Aguas servidas</label>
+            <label><input type="radio" name="tipo_derrame" value="residuos_peligrosos"> Residuos peligrosos</label>
+            <label><input type="radio" name="tipo_derrame" value="aceites_lubricantes"> Aceites y/o lubricantes</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row conditional" id="seccion_derrame_sustancia">
+        <span class="form-label required">Sustancia derramada</span>
+        <div class="form-input-wrapper">
+          <input type="text" name="sustancia_derramada" placeholder="Nombre de la sustancia">
+        </div>
+      </div>
+
+      <div class="form-row conditional" id="seccion_derrame_ubicacion">
+        <span class="form-label required">Ubicación del derrame</span>
+        <div class="form-input-wrapper">
+          <div class="radio-group">
+            <label><input type="radio" name="ubicacion_derrame" value="dentro_pretil"> Dentro de pretil</label>
+            <label><input type="radio" name="ubicacion_derrame" value="rebalse_asfalto"> Rebalse de pretil - Asfalto</label>
+            <label><input type="radio" name="ubicacion_derrame" value="rebalse_suelo"> Rebalse de pretil - Suelo</label>
+            <label><input type="radio" name="ubicacion_derrame" value="agua"> Agua</label>
+            <label><input type="radio" name="ubicacion_derrame" value="no_pretil_asfalto"> No cuenta con pretil a Asfalto</label>
+            <label><input type="radio" name="ubicacion_derrame" value="no_pretil_suelo"> No cuenta con pretil a Suelo</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row conditional" id="seccion_derrame_cantidad">
+        <span class="form-label required">Cantidad derramada</span>
+        <div class="form-input-wrapper">
+          <input type="text" name="cantidad_derramada" placeholder="100 L, 50 Kg o 'Se desconoce'">
+          <p class="helper-text">Si no sabe, escriba: Se desconoce</p>
+        </div>
+      </div>
+
+      <div class="section-title">Descripción y Evidencia</div>
+
+      <div class="form-row full">
+        <label class="form-label required">Detalle del incidente ambiental</label>
+        <div class="form-input-wrapper" style="width: 100%;">
+          <textarea name="detalle_incidente" placeholder="¿Dónde ocurrió? ¿Qué ocurrió?" required></textarea>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <label class="form-label required">Inserte fotografía</label>
+        <div class="form-input-wrapper" style="width: 100%;">
+          <div class="upload-area">
+            <button type="button" onclick="document.getElementById('fileInput').click()">Cargar archivo</button>
+            <p class="helper-text">Límite: 5 archivos, máx 100 MB c/u</p>
+            <p class="helper-text">Word, Excel, PPT, PDF, Imagen, Video, Audio</p>
+            <input type="file" id="fileInput" style="display: none;" multiple>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="button-group">
+        <button type="reset" class="btn-cancel">Cancelar</button>
+        <button type="submit" class="btn-submit">Confirmar</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const contraristaSi = document.getElementById('contratista_si');
+    const contraristNo = document.getElementById('contratista_no');
+    const nombreSeccion = document.getElementById('nombre_contratista_section');
+    
+    const esDerrameSelect = document.getElementById('es_derrame');
+    const tipoIncidenteSection = document.getElementById('tipo_incidente_section');
+    
+    // Secciones de derrame
+    const seccionDerrameTitle = document.getElementById('seccion_derrame_titulo');
+    const seccionDerrametipo = document.getElementById('seccion_derrame_tipo');
+    const seccionDerramesustancia = document.getElementById('seccion_derrame_sustancia');
+    const seccionDerrameubicacion = document.getElementById('seccion_derrame_ubicacion');
+    const seccionDerramecentidad = document.getElementById('seccion_derrame_cantidad');
+    
+    const reportForm = document.getElementById('reportForm');
+
+    function toggleContratista() {
+      if (contraristaSi.checked) {
+        nombreSeccion.classList.add('show');
+      } else {
+        nombreSeccion.classList.remove('show');
+      }
+    }
+
+    function toggleDerrameSections() {
+      const value = esDerrameSelect.value;
+      if (value === 'si') {
+        // Mostrar sección de derrame
+        seccionDerrameTitle.style.display = 'block';
+        seccionDerrametipo.classList.add('show');
+        seccionDerramesustancia.classList.add('show');
+        seccionDerrameubicacion.classList.add('show');
+        seccionDerramecentidad.classList.add('show');
+        
+        // Ocultar otros tipos de incidente
+        tipoIncidenteSection.classList.remove('show');
+      } else if (value === 'no') {
+        // Ocultar sección de derrame
+        seccionDerrameTitle.style.display = 'none';
+        seccionDerrametipo.classList.remove('show');
+        seccionDerramesustancia.classList.remove('show');
+        seccionDerrameubicacion.classList.remove('show');
+        seccionDerramecentidad.classList.remove('show');
+        
+        // Mostrar otros tipos de incidente
+        tipoIncidenteSection.classList.add('show');
+      } else {
+        seccionDerrameTitle.style.display = 'none';
+        seccionDerrametipo.classList.remove('show');
+        seccionDerramesustancia.classList.remove('show');
+        seccionDerrameubicacion.classList.remove('show');
+        seccionDerramecentidad.classList.remove('show');
+        tipoIncidenteSection.classList.remove('show');
+      }
+    }
+
+    contraristaSi.addEventListener('change', toggleContratista);
+    contraristNo.addEventListener('change', toggleContratista);
+    esDerrameSelect.addEventListener('change', toggleDerrameSections);
+
+    reportForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Formulario listo para enviar a servidor.\n\nEsta es una maqueta — en PGIS se integraría con la base de datos.');
+    });
+  </script>
+</body>
+</html>
